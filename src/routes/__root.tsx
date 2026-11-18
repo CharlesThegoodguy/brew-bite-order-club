@@ -83,19 +83,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Bean & Bite — Kopi & Dessert" },
       { name: "description", content: "Kopi segar, dessert Oreo, dan paket bundling favorit, siap menemani harimu." },
-      { name: "author", content: "Lovable" },
+      { name: "author", content: "Bean & Bite" },
       { property: "og:title", content: "Bean & Bite — Kopi & Dessert" },
       { property: "og:description", content: "Kopi segar, dessert Oreo, dan paket bundling favorit, siap menemani harimu." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:site", content: "@BeanAndBite" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.ico?v=2", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

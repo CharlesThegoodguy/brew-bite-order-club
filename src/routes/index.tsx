@@ -90,7 +90,7 @@ const products: Product[] = [
   },
   {
     id: "paket-epri",
-    name: "Paket EPRI",
+    name: "Paket EPRT",
     description: "Americano Cranberry + Dessert Oreo",
     category: "Bundling",
     price: 18000,
@@ -125,8 +125,17 @@ function Storefront() {
   const [recentlyAddedProductId, setRecentlyAddedProductId] = useState<string | null>(null);
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
+  const [pickupDate, setPickupDate] = useState("");
   const [orderNotes, setOrderNotes] = useState("");
   const [orderNumber, setOrderNumber] = useState("");
+
+  const pickupDateOptions = [
+    "23 November 2026",
+    "24 November 2026",
+    "25 November 2026",
+    "26 November 2026",
+    "27 November 2026",
+  ];
 
   const visibleProducts = useMemo(
     () => products.filter((product) => category === "Semua" || product.category === category),
@@ -155,7 +164,7 @@ function Storefront() {
 
   const reviewOrder = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!customerName.trim() || !customerPhone.trim() || cartCount === 0) return;
+    if (!customerName.trim() || !customerPhone.trim() || !pickupDate || cartCount === 0) return;
     setStep("confirm");
   };
 
@@ -172,6 +181,7 @@ function Storefront() {
     `Halo Bean & Bite, saya ingin mengirim bukti pembayaran untuk pesanan ${orderNumber}.`,
     `Nama: ${customerName}`,
     `No. WhatsApp: ${customerPhone}`,
+    `Tanggal pengambilan: ${pickupDate}`,
     ...orderSummary,
     `Total: ${formatRupiah(cartTotal)}`,
     orderNotes.trim() ? `Catatan: ${orderNotes.trim()}` : "",
@@ -203,6 +213,12 @@ function Storefront() {
           <span className="font-extrabold tabular-nums">{cartCount}</span>
         </Button>
       </header>
+
+      <div className="relative z-10 mx-auto mt-6 w-full max-w-2xl text-center sm:mt-8">
+        <p className="font-display text-3xl font-black text-primary-foreground sm:text-4xl">
+          PO BATCH Duaaaaa!!!!
+        </p>
+      </div>
 
       <section className="relative z-10 mx-auto mt-10 w-full max-w-2xl sm:mt-14" aria-labelledby="menu-title">
         <div className="receipt-paper relative border border-paper-ink/10">
@@ -441,6 +457,22 @@ function Storefront() {
                   <Input id="customer-phone" name="phone" type="tel" autoComplete="tel" placeholder="Contoh: 081234567890" value={customerPhone} onChange={(event) => setCustomerPhone(event.target.value)} required />
                 </div>
                 <div className="space-y-2">
+                  <label htmlFor="pickup-date" className="text-sm font-bold">Tanggal pengambilan</label>
+                  <select
+                    id="pickup-date"
+                    name="pickup-date"
+                    value={pickupDate}
+                    onChange={(event) => setPickupDate(event.target.value)}
+                    required
+                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                  >
+                    <option value="" disabled>Pilih tanggal pengambilan</option>
+                    {pickupDateOptions.map((date) => (
+                      <option key={date} value={date}>{date}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="space-y-2">
                   <label htmlFor="order-notes" className="text-sm font-bold">Catatan <span className="font-normal text-paper-muted">(opsional)</span></label>
                   <Textarea id="order-notes" name="notes" placeholder="Contoh: tanpa sedotan" value={orderNotes} onChange={(event) => setOrderNotes(event.target.value)} rows={3} />
                 </div>
@@ -484,6 +516,7 @@ function Storefront() {
                 </div>
                 <p><span className="font-bold">Nama:</span> {customerName}</p>
                 <p><span className="font-bold">No. WhatsApp:</span> {customerPhone}</p>
+                <p><span className="font-bold">Tanggal pengambilan:</span> {pickupDate}</p>
                 {orderNotes.trim() && <p className="whitespace-pre-wrap"><span className="font-bold">Catatan:</span> {orderNotes}</p>}
                 <div className="flex justify-between border-t border-border pt-2 font-black">
                   <span>Total · QRIS</span><span>{formatRupiah(cartTotal)}</span>
@@ -525,6 +558,7 @@ function Storefront() {
                     </div>
                   );
                 })}
+                <p className="border-t border-border pt-2 text-paper-muted">Tanggal pengambilan: {pickupDate}</p>
                 {orderNotes.trim() && <p className="border-t border-border pt-2 text-paper-muted">Catatan: {orderNotes}</p>}
                 <div className="flex justify-between border-t border-border pt-2 text-base font-black">
                   <span>Total pembayaran</span><span>{formatRupiah(cartTotal)}</span>
