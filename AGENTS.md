@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Application architecture
+
+- Keep the cafe storefront as a single TanStack index page with in-memory cart and checkout state; the requested simple purchase flow does not need accounts or persisted orders.
